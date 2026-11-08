@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MediMind AI – Intelligent Prescription Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f5f5;--card:#fff;--tx:#252525;--tx2:#777;--bd:#e5e5e5;--ac:#555;--soft:#eee;--dk:#171717;--r:18px;--sh:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+[data-theme=dark]{--bg:#111;--card:#1b1b1b;--tx:#f0f0f0;--tx2:#9a9a9a;--bd:#2c2c2c;--ac:#bbb;--soft:#262626}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--tx);outline-offset:2px}
+.btn{border:1px solid var(--bd);background:var(--card);padding:10px 18px;border-radius:12px;cursor:pointer;font-weight:600;transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}
+.btn.p{background:var(--dk);color:#fff;border-color:var(--dk)}[data-theme=dark] .btn.p{background:#f0f0f0;color:#111}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:9px}.btn.dng{color:#a33}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:22px;box-shadow:var(--sh)}
+.grid{display:grid;gap:18px}.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.muted{color:var(--tx2);font-size:14px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+h1,h2,h3{letter-spacing:-.03em}.tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--ac)}
+.tag.warn{background:#fff3cd;color:#6b5200;outline:1px dashed #b38600}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card)}
+label{font-size:13px;font-weight:600;display:block;margin:12px 0 4px}.unclear input{border:2px dashed #b38600;background:#fffbe9;color:#222}
+/* landing */
+#landing nav{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);z-index:20;border-bottom:1px solid var(--bd)}
+#landing nav .links{display:flex;gap:26px;align-items:center}#landing nav a{color:var(--tx2);text-decoration:none;font-weight:600;font-size:14px}
+.logo{font-weight:800;font-size:19px;display:flex;gap:8px;align-items:center}.logo i{width:28px;height:28px;border-radius:8px;background:var(--dk);color:#fff;display:grid;place-items:center;font-style:normal}
+section.s{padding:80px 5vw;max-width:1200px;margin:auto}.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;padding-top:70px}
+.hero h1{font-size:clamp(38px,5.5vw,66px);line-height:1.04}.hero p{font-size:18px;color:var(--tx2);margin:20px 0 28px;max-width:520px}
+.mock{position:relative;background:var(--dk);border-radius:24px;padding:22px;color:#eee;min-height:340px;overflow:hidden}
+.mock .rx{background:#fafafa;color:#333;border-radius:12px;padding:18px;font-family:"Courier New",monospace;font-size:13px;position:relative;overflow:hidden}
+.scanline{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#171717,transparent);box-shadow:0 0 14px #000;animation:scan 2.8s ease-in-out infinite}
+@keyframes scan{0%,100%{top:0}50%{top:calc(100% - 3px)}}
+.float{position:absolute;background:var(--card);color:var(--tx);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600;box-shadow:var(--sh);animation:fl 5s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px)}}
+.feat h3{margin:6px 0}.ico{width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:19px}
+.dark{background:var(--dk);color:#eee;border-radius:28px;padding:50px}.dark .muted{color:#aaa}
+footer{padding:40px 5vw;border-top:1px solid var(--bd);color:var(--tx2);font-size:13px;text-align:center}
+/* app */
+#app{display:none;min-height:100vh}#app.on{display:flex}
+aside{width:250px;background:var(--card);border-right:1px solid var(--bd);padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;flex-shrink:0;transition:transform .3s;z-index:40}
+aside .nav{display:flex;gap:10px;align-items:center;padding:11px 14px;border-radius:12px;border:0;background:none;cursor:pointer;font-weight:600;color:var(--tx2);text-align:left;transition:.2s}
+aside .nav:hover{background:var(--soft);padding-left:18px}aside .nav.on{background:var(--dk);color:#fff}[data-theme=dark] aside .nav.on{background:#eee;color:#111}
+.wrap{flex:1;min-width:0}.top{display:flex;gap:14px;align-items:center;padding:16px 28px;border-bottom:1px solid var(--bd);background:var(--card);position:sticky;top:0;z-index:15}
+.top .srch{flex:1;max-width:340px}.av{width:38px;height:38px;border-radius:50%;background:var(--dk);color:#fff;display:grid;place-items:center;font-weight:700}
+#main{padding:28px;max-width:1200px;animation:pg .35s}@keyframes pg{from{opacity:0;transform:translateY(8px)}}
+.menu{display:none}.stat b{font-size:32px;letter-spacing:-.04em;display:block}
+.bars{display:flex;gap:12px;align-items:flex-end;height:150px}.bars div{flex:1;background:var(--dk);border-radius:8px 8px 0 0;transform-origin:bottom;animation:gr .8s;position:relative}[data-theme=dark] .bars div{background:#ddd}
+.bars span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:12px;color:var(--tx2)}@keyframes gr{from{transform:scaleY(0)}}
+.item{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}.item:last-child{border:0}
+.prog{height:8px;background:var(--soft);border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;background:var(--dk);border-radius:9px;transition:width .6s}[data-theme=dark] .prog i{background:#eee}
+.drop{border:2px dashed var(--bd);border-radius:20px;padding:40px;text-align:center;cursor:pointer;transition:.2s}.drop.hv,.drop:hover{border-color:var(--tx);background:var(--soft)}
+.pv{position:relative;display:inline-block;max-width:100%;overflow:hidden;border-radius:14px}.pv img{max-width:100%;max-height:340px;display:block}
+.stage{display:flex;gap:10px;align-items:center;padding:8px 0;color:var(--tx2)}.stage.on{color:var(--tx);font-weight:700}.stage.ok{color:var(--tx)}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--bd);display:grid;place-items:center;font-size:11px}.ok .dot{background:var(--dk);color:#fff;border-color:var(--dk)}
+.on .dot{border-color:var(--tx);animation:pulse 1s infinite}@keyframes pulse{50%{transform:scale(1.25)}}
+mark{background:#fff3cd;border-bottom:2px dashed #b38600;color:#222;padding:0 3px}.ocr{font-family:"Courier New",monospace;font-size:13px;background:var(--soft);border-radius:12px;padding:14px;white-space:pre-wrap}
+.alert{background:var(--soft);border-left:4px solid var(--tx);padding:12px 16px;border-radius:10px;font-size:13px;margin:12px 0}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}.week div{padding:10px 4px;border-radius:12px;background:var(--soft);font-size:13px}.week .today{background:var(--dk);color:#fff}
+/* overlay */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;z-index:100;padding:16px;animation:fi .2s}@keyframes fi{from{opacity:0}}
+.modal{background:var(--card);border-radius:22px;padding:26px;width:min(560px,100%);max-height:90vh;overflow:auto;animation:pop .25s}@keyframes pop{from{transform:scale(.95);opacity:0}}
+#toasts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:200;display:grid;gap:8px}.toast{background:var(--dk);color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;animation:pop .25s;box-shadow:var(--sh)}
+#fab{position:fixed;right:22px;bottom:22px;width:58px;height:58px;border-radius:50%;background:var(--dk);color:#fff;border:0;font-size:24px;cursor:pointer;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:fl 4s ease-in-out infinite}
+#chat{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--card);border-left:1px solid var(--bd);z-index:90;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .3s}#chat.on{transform:none}
+#msgs{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}.m{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px}.m.u{align-self:flex-end;background:var(--dk);color:#fff}.m.a{background:var(--soft)}
+.sk{height:90px;border-radius:14px;background:linear-gradient(90deg,var(--soft),var(--bd),var(--soft));background-size:200%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200%}}
+@media(max-width:860px){aside{position:fixed;left:0;transform:translateX(-105%)}aside.on{transform:none}.menu{display:block}.hero{grid-template-columns:1fr}#landing nav .links a.h{display:none}#main{padding:16px}.top{padding:12px 16px}.dark{padding:28px}}
+@media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
+</style></head><body>
+<div id="landing">
+<nav><div class="logo"><i>M</i>MediMind AI</div><div class="links"><a class="h" href="#features">Features</a><a class="h" href="#how">How It Works</a><a class="h" href="#about">About</a><a href="#" data-go>Sign In</a><button class="btn p" data-go>Get Started</button></div></nav>
+<section class="s hero"><div><span class="tag">Informational tool · not medical advice</span><h1 style="margin-top:16px">Understand Your Prescription. Take Control of Your Health.</h1><p>Transform complex prescriptions into simple, understandable medication instructions with intelligent AI assistance.</p><div class="row"><button class="btn p" data-go>Try It Now</button><a class="btn" href="#features" style="text-decoration:none">Explore Features</a></div></div>
+<div class="mock"><div class="rx"><b>Dr. A. Rao · Rx</b><br>Amoxicillin 500mg<br>1 cap TDS after food<br>Paracetamol <mark>?? mg</mark> SOS<div class="scanline"></div></div>
+<div class="float" style="right:16px;top:14px">💊 3 medicines found</div><div class="float" style="left:16px;bottom:70px;animation-delay:1s">⚠ 1 detail needs review</div>
+<div class="float" style="right:20px;bottom:18px;animation-delay:2s">🤖 “TDS means three times a day.”</div></div></section>
+<section class="s" id="about"><div class="grid g2"><div class="card"><h2>The problem</h2><p class="muted" style="margin-top:8px">Handwritten notes, Latin abbreviations and tiny print leave patients unsure what their prescription says. Missed or mixed-up doses follow.</p></div><div class="card"><h2>The solution</h2><p class="muted" style="margin-top:8px">MediMind AI rewrites prescription text in plain language, flags anything unclear for manual checking, and organizes medicines and reminders in one place.</p></div></div></section>
+<section class="s" id="features"><h2 style="font-size:36px;margin-bottom:24px">Built for clarity</h2><div class="grid g4">
+<div class="card feat"><div class="ico">📷</div><h3>Prescription scanner</h3><p class="muted">Upload or capture a photo and see the text it contains.</p></div>
+<div class="card feat"><div class="ico">🧠</div><h3>Plain-language explanations</h3><p class="muted">Abbreviations and terms explained simply.</p></div>
+<div class="card feat"><div class="ico">💊</div><h3>Medication management</h3><p class="muted">Verify, save, edit and track every medicine.</p></div>
+<div class="card feat"><div class="ico">⏰</div><h3>Reminders</h3><p class="muted">Daily timeline with taken and skipped tracking.</p></div></div></section>
+<section class="s" id="how"><h2 style="font-size:36px;margin-bottom:24px">How it works</h2><div class="grid g4">
+<div class="card"><b>1. Upload</b><p class="muted">Add a prescription photo.</p></div><div class="card"><b>2. Extract</b><p class="muted">Text is read (simulated in this demo).</p></div><div class="card"><b>3. Review</b><p class="muted">Check every detail yourself.</p></div><div class="card"><b>4. Organize</b><p class="muted">Save medicines and reminders.</p></div></div></section>
+<section class="s"><div class="dark"><h2>Privacy and safety first</h2><p class="muted" style="margin:10px 0 16px">In this demo, everything stays in your browser. Nothing is uploaded to a server.</p><p>MediMind AI does not diagnose, prescribe or suggest dose changes, and never fills in missing details. Always confirm with your doctor or pharmacist.</p><br><button class="btn" data-go style="color:#111">Open the app</button></div></section>
+<footer>© 2026 MediMind AI · Hackathon demo with simulated OCR and AI. Not a substitute for professional medical advice.</footer></div>
+
+<div id="app"><aside id="side"><div class="logo" style="padding:6px 10px 18px"><i>M</i>MediMind AI</div><div id="navs" style="display:grid;gap:4px"></div><div style="flex:1"></div><button class="btn sm" id="logout">Log out</button><button class="btn sm" id="home">← Landing page</button></aside>
+<div class="wrap"><div class="top"><button class="btn sm menu" id="menu" aria-label="Menu">☰</button><div id="welcome" style="font-weight:700"></div><input class="srch" id="gs" placeholder="Search medicines…" aria-label="Search"><div style="flex:1"></div><button class="btn sm" id="bell" aria-label="Notifications">🔔</button><div class="av" id="avatar"></div></div><main id="main"></main></div></div>
+<button id="fab" aria-label="Open AI assistant" hidden>🤖</button>
+<div id="chat" role="dialog" aria-label="AI assistant"><div class="row sp" style="padding:16px;border-bottom:1px solid var(--bd)"><b>MediMind Assistant</b><button class="btn sm" id="cx">Close</button></div><div id="msgs"></div><div class="row" style="padding:0 18px" id="sugg"></div><div class="row" style="padding:14px;flex-wrap:nowrap"><input id="ci" placeholder="Ask about terms or your text…" aria-label="Message"><button class="btn p" id="cs">Send</button></div></div>
+<div id="toasts" aria-live="polite"></div>
+<script>
+"use strict";
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>new Date().toISOString().slice(0,10),uid=()=>Math.random().toString(36).slice(2,9);
+const SEED={user:{name:"Priya Kulkarni",email:"priya@example.com"},set:{notif:true,sound:false,priv:true,theme:"light",lead:10},
+meds:[{id:"m1",name:"Metformin",strength:"500 mg",instr:"1 tablet twice daily after meals",time:"08:00",start:"2026-10-20",end:"2026-12-20"},
+{id:"m2",name:"Vitamin D3",strength:"60000 IU",instr:"1 capsule once weekly",time:"13:00",start:"2026-09-01",end:"2026-10-15"},
+{id:"m3",name:"Cetirizine",strength:"10 mg",instr:"1 tablet at night",time:"21:00",start:"2026-11-01",end:"2026-11-30"}],
+rems:[{id:"r1",name:"Metformin 500 mg",time:"08:00",st:"taken"},{id:"r2",name:"Vitamin D3 60000 IU",time:"13:00",st:"pending"},{id:"r3",name:"Metformin 500 mg",time:"20:00",st:"pending"},{id:"r4",name:"Cetirizine 10 mg",time:"21:00",st:"skipped"}],
+hist:[{id:"h1",doctor:"Dr. S. Patil",date:"2026-10-20",n:2,status:"Verified"},{id:"h2",doctor:"Dr. A. Rao",date:"2026-09-01",n:1,status:"Completed"},{id:"h3",doctor:"Dr. M. Shah",date:"2026-11-01",n:1,status:"Needs review"}],
+act:["Marked Metformin as taken","Verified prescription from Dr. S. Patil"],week:[80,100,60,90,100,70,85]};
+let S;try{S=JSON.parse(localStorage.getItem("mm2"))||structuredClone(SEED)}catch(e){S=structuredClone(SEED)}
+/* Database sync: same-origin when served by Spring Boot, absolute URL when opened as a file */
+const API=location.protocol==="file:"?"http://localhost:8082":"";let syncTimer;
+const save=()=>{try{localStorage.setItem("mm2",JSON.stringify(S))}catch(e){}pushState()};
+const tok=()=>localStorage.getItem("mmtoken"),hdr=()=>({"Content-Type":"application/json",Authorization:"Bearer "+tok()});
+function pushState(){if(!tok())return;clearTimeout(syncTimer);syncTimer=setTimeout(()=>fetch(API+"/api/state",{method:"PUT",headers:hdr(),body:JSON.stringify(S)}).catch(()=>{}),300)}
+async function pullState(){if(!tok())return;try{const r=await fetch(API+"/api/state",{headers:hdr()});if(r.status===200){S=await r.json();try{localStorage.setItem("mm2",JSON.stringify(S))}catch(e){}applyTheme();if($("#app").classList.contains("on")){$("#welcome").textContent="Welcome back, "+S.user.name.split(" ")[0];render()}}else if(r.status===204)pushState();else if(r.status===401)localStorage.removeItem("mmtoken")}catch(e){/* backend offline: keep working from localStorage */}}
+function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;$("#toasts").append(e);setTimeout(()=>e.remove(),2600)}
+function log(t){S.act.unshift(t);S.act=S.act.slice(0,6)}
+/* modal */
+function modal(title,html,mount){const o=document.createElement("div");o.className="ov";o.innerHTML=`<div class="modal" role="dialog" aria-modal="true"><div class="row sp"><h2>${esc(title)}</h2><button class="btn sm" data-x aria-label="Close">✕</button></div>${html}</div>`;
+const close=()=>o.remove();o.addEventListener("click",e=>{if(e.target===o||e.target.dataset.x!==undefined)close()});document.addEventListener("keydown",function k(e){if(e.key==="Escape"){close();document.removeEventListener("keydown",k)}});document.body.append(o);mount&&mount(o,close);return close}
+function formModal(title,fields,vals,onSave){const h=fields.map(f=>`<label for="f_${f[0]}">${f[1]}</label><input id="f_${f[0]}" type="${f[2]||"text"}" value="${esc(vals[f[0]])}">`).join("")+`<p class="muted" id="err" style="color:#a33;margin-top:8px"></p><div class="row" style="margin-top:14px"><button class="btn p" id="sv">Save</button></div>`;
+modal(title,h,(o,close)=>o.querySelector("#sv").onclick=()=>{const v={};fields.forEach(f=>v[f[0]]=o.querySelector("#f_"+f[0]).value.trim());const bad=validate(v);if(bad){o.querySelector("#err").textContent=bad;return}onSave(v);close()})}
+function validate(v){if("name" in v&&!v.name)return "Name is required.";if(v.start&&v.end&&v.end<v.start)return "End date must be after the start date.";if(v.time&&!/^\d\d:\d\d$/.test(v.time))return "Choose a valid time.";return ""}
+/* routing */
+const PAGES=[["overview","▦","Overview"],["scanner","📷","Prescription Scanner"],["meds","💊","My Medicines"],["reminders","⏰","Reminders"],["history","🗂","Prescription History"],["assistant","🤖","AI Assistant"],["settings","⚙","Settings"]];
+let page="overview",q="";const scan={url:null,stage:-1,res:null};
+function go(p){if(p==="assistant"){openChat();return}page=p;$("#side").classList.remove("on");renderNav();render()}
+function renderNav(){$("#navs").innerHTML=PAGES.map(p=>`<button class="nav ${p[0]===page?"on":""}" data-p="${p[0]}">${p[1]} ${p[2]}</button>`).join("")}
+function enter(){$("#landing").style.display="none";$("#app").classList.add("on");$("#fab").hidden=false;$("#welcome").textContent="Welcome back, "+S.user.name.split(" ")[0];$("#avatar").textContent=S.user.name[0];renderNav();render();scrollTo(0,0)}
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=e=>{e.preventDefault();tok()?enter():authModal(b.textContent.trim()==="Sign In"?"login":"signup")});
+$("#home").onclick=()=>{$("#app").classList.remove("on");$("#landing").style.display="";$("#fab").hidden=true};
+$("#menu").onclick=()=>$("#side").classList.toggle("on");
+$("#navs").onclick=e=>{const b=e.target.closest("[data-p]");b&&go(b.dataset.p)};
+$("#bell").onclick=()=>modal("Notifications",`<p class="muted" style="margin:10px 0">${S.rems.filter(r=>r.st==="pending").length} reminders pending today.</p><div class="alert">Browser reminders are a demonstration only and are not a substitute for a reliable medical alert system.</div>`);
+$("#gs").oninput=e=>{q=e.target.value.toLowerCase();if(q&&page!=="meds")go("meds");else render()};
+function render(){const m=$("#main");m.innerHTML='<div class="grid g2"><div class="sk"></div><div class="sk"></div></div>';setTimeout(()=>{m.innerHTML=VIEWS[page]();(AFTER[page]||(()=>{}))();m.focus?.()},120)}
+const sched=()=>[...S.rems].sort((a,b)=>a.time.localeCompare(b.time));
+const stTag=s=>`<span class="tag">${{taken:"Taken",skipped:"Skipped",pending:"Upcoming"}[s]}</span>`;
+const isActive=m=>m.end>=today();
+/* views */
+const VIEWS={
+overview(){const t=S.rems.filter(r=>r.st==="taken").length,p=S.rems.filter(r=>r.st==="pending").length,done=S.rems.filter(r=>r.st!=="pending").length,ad=done?Math.round(t/done*100):100,days="MTWTFSS".split("");
+return `<h1>Overview</h1><p class="muted">Your medication picture for today.</p><br><div class="grid g4">
+<div class="card stat"><span class="muted">Total medicines</span><b>${S.meds.length}</b></div><div class="card stat"><span class="muted">Upcoming reminders</span><b>${p}</b></div><div class="card stat"><span class="muted">Completed doses</span><b>${t}</b></div><div class="card stat"><span class="muted">Adherence</span><b>${ad}%</b><div class="prog"><i style="width:${ad}%"></i></div></div></div><br>
+<div class="grid g2"><div class="card"><h3>Weekly activity</h3><p class="muted">Doses taken as % of scheduled (sample data)</p><br><div class="bars">${S.week.map((v,i)=>`<div style="height:${v}%"><span>${days[i]}</span></div>`).join("")}</div><br></div>
+<div class="card"><h3>Today's schedule</h3>${sched().map(r=>`<div class="item"><span><b>${esc(r.time)}</b> ${esc(r.name)}</span>${stTag(r.st)}</div>`).join("")||'<p class="muted">No reminders yet.</p>'}</div>
+<div class="card"><h3>Recent prescriptions</h3>${S.hist.slice(0,3).map(h=>`<div class="item"><span>${esc(h.doctor)}<br><small class="muted">${esc(h.date)}</small></span><span class="tag">${esc(h.status)}</span></div>`).join("")}</div>
+<div class="card" style="background:var(--dk);color:#eee"><h3>AI assistant</h3><p style="margin:8px 0 14px;color:#bbb">Ask what “after food” or “TDS” means. I explain terms only — never diagnoses or dosing advice.</p><button class="btn" id="ask" style="color:#111">Open assistant</button></div>
+<div class="card"><h3>Recent activity</h3>${S.act.map(a=>`<div class="item muted">${esc(a)}</div>`).join("")}</div></div>`},
+scanner(){return `<h1>Prescription Scanner</h1><p class="muted">Upload a JPG, PNG or WEBP (max 5 MB). OCR and AI here are <b>simulated demo data</b>.</p><br><div id="sc">${scanUI()}</div>`},
+meds(){const f=$("#fl")?.value||"all",list=S.meds.filter(m=>(!q||(m.name+m.instr).toLowerCase().includes(q))&&(f==="all"||(f==="active")===isActive(m)));
+return `<div class="row sp"><h1>My Medicines</h1><button class="btn p" id="addm">+ Add medicine</button></div><br><div class="row"><input id="ms" placeholder="Search medicines" value="${esc(q)}" style="max-width:280px" aria-label="Search medicines"><select id="fl" style="max-width:160px" aria-label="Filter"><option value="all">All</option><option value="active">Active</option><option value="done">Completed</option></select></div><br>
+<div class="grid g2">${list.map(m=>`<div class="card"><div class="row sp"><h3>${esc(m.name)}</h3><span class="tag">${isActive(m)?"Active":"Completed"}</span></div><p>${esc(m.strength)||'<span class="tag warn">Strength not set</span>'}</p><p class="muted">${esc(m.instr)}</p><p class="muted">${esc(m.start)} → ${esc(m.end)} · ⏰ ${esc(m.time)}</p><div class="row" style="margin-top:12px"><button class="btn sm" data-a="view" data-id="${m.id}">Details</button><button class="btn sm" data-a="edit" data-id="${m.id}">Edit</button><button class="btn sm dng" data-a="del" data-id="${m.id}">Delete</button></div></div>`).join("")||'<div class="card muted">No medicines match. Add one or scan a prescription.</div>'}</div>`},
+reminders(){const d=sched(),n=d.filter(r=>r.st!=="pending").length,pc=d.length?Math.round(n/d.length*100):0,dn=new Date().getDay();
+return `<div class="row sp"><h1>Reminders</h1><button class="btn p" id="addr">+ Add reminder</button></div><div class="alert">Browser reminders are a demonstration and not a substitute for a reliable medical alert system.</div>
+<div class="card"><div class="week">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map((x,i)=>`<div class="${i===dn?"today":""}">${x}<br><b>${new Date(Date.now()+(i-dn)*864e5).getDate()}</b></div>`).join("")}</div><br><div class="row sp"><b>Today's completion</b><span>${pc}%</span></div><div class="prog"><i style="width:${pc}%"></i></div></div><br>
+<div class="card"><h3>Daily timeline</h3>${d.map(r=>`<div class="item"><span><b>${esc(r.time)}</b> · ${esc(r.name)} ${stTag(r.st)}</span><span class="row"><button class="btn sm" data-a="take" data-id="${r.id}">Mark as Taken</button><button class="btn sm" data-a="skip" data-id="${r.id}">Mark as Skipped</button><button class="btn sm" data-a="er" data-id="${r.id}">Edit</button><button class="btn sm dng" data-a="dr" data-id="${r.id}">Delete</button></span></div>`).join("")||'<p class="muted">No reminders. Add your first one.</p>'}</div>`},
+history(){const f=$("#hf")?.value||"all",s=($("#hs")?.value||"").toLowerCase(),l=S.hist.filter(h=>h.doctor.toLowerCase().includes(s)&&(f==="all"||h.status===f));
+return `<h1>Prescription History</h1><br><div class="row"><input id="hs" placeholder="Search by doctor" style="max-width:260px" aria-label="Search history"><select id="hf" style="max-width:180px" aria-label="Filter status"><option value="all">All statuses</option><option>Verified</option><option>Completed</option><option>Needs review</option></select></div><br><div class="card">${l.map(h=>`<div class="item"><span><b>${esc(h.doctor)}</b><br><small class="muted">${esc(h.date)} · ${h.n} medicine(s)</small></span><span class="row"><span class="tag">${esc(h.status)}</span><button class="btn sm" data-a="hv" data-id="${h.id}">View details</button><button class="btn sm dng" data-a="hd" data-id="${h.id}">Delete</button></span></div>`).join("")||'<p class="muted">No records found.</p>'}</div>`},
+settings(){const s=S.set,tg=(k,l)=>`<label class="row" style="margin:10px 0;font-weight:500"><input type="checkbox" style="width:auto" data-s="${k}" ${s[k]?"checked":""}> ${l}</label>`;
+return `<h1>Settings</h1><br><div class="grid g2"><div class="card"><h3>Profile</h3><label for="un">Name</label><input id="un" value="${esc(S.user.name)}"><label for="ue">Email</label><input id="ue" type="email" value="${esc(S.user.email)}"><br><button class="btn p" id="sp">Save profile</button></div>
+<div class="card"><h3>Preferences</h3>${tg("notif","Notifications on")}${tg("sound","Reminder sound")}${tg("priv","Keep data only in this browser")}<label for="th">Theme</label><select id="th"><option value="light">Light</option><option value="dark">Dark</option></select><label for="ld">Remind me before (minutes)</label><input id="ld" type="number" min="0" max="60" value="${s.lead}"><br><button class="btn" id="rst">Reset demo data</button></div>
+<div class="card"><h3>About</h3><p class="muted">MediMind AI v1.0 demo. OCR and AI responses are simulated; data lives in localStorage.</p></div>
+<div class="card"><h3>Medical safety</h3><p class="muted">This tool organizes information. It does not diagnose, prescribe or advise dose changes. Unclear details must be checked with your doctor or pharmacist.</p></div></div>`}};
+/* scanner */
+const STAGES=["Uploading prescription","Extracting text (simulated OCR)","Processing with AI (simulated)","Preparing simplified explanation"];
+function scanUI(){let h="";
+if(!scan.url)h=`<div class="drop" id="drop" tabindex="0" role="button">📄<h3>Drop a prescription image here</h3><p class="muted">or click to browse</p></div><div class="row" style="margin-top:12px"><button class="btn" id="cam">📷 Use camera</button></div>`;
+else h=`<div class="card"><div class="pv" id="pv"><img src="${scan.url}" alt="Uploaded prescription">${scan.stage>=0&&scan.stage<4?'<div class="scanline"></div>':""}</div><div class="row" style="margin-top:14px"><button class="btn p" id="go" ${scan.stage>=0&&scan.stage<4?"disabled":""}>Scan Prescription</button><button class="btn" id="rep">Replace</button><button class="btn dng" id="rm">Remove</button></div>${scan.stage>=0&&scan.stage<4?`<div style="margin-top:14px">${STAGES.map((s,i)=>`<div class="stage ${i<scan.stage?"ok":i===scan.stage?"on":""}"><span class="dot">${i<scan.stage?"✓":""}</span>${s}</div>`).join("")}</div>`:""}</div>`;
+if(scan.stage===4)h+=analysisUI();
+return h+'<input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden><input type="file" id="cf" accept="image/*" capture="environment" hidden>'}
+/* Simulated extraction result – never real OCR */
+const MOCK={text:["Dr. S. Patil – Rx","1) Amoxicillin 500mg","   1 cap TDS after food x 5 days","2) Paracetamol [??]mg","   SOS","3) Pantoprazole [illegible]"],
+meds:[{name:"Amoxicillin",strength:"500 mg",instr:"1 capsule TDS after food for 5 days",conf:92,unclear:[]},{name:"Paracetamol",strength:"",instr:"SOS",conf:61,unclear:["strength"]},{name:"Pantoprazole",strength:"",instr:"",conf:34,unclear:["strength","instr"]}]};
+function analysisUI(){const t=MOCK.text.map(l=>esc(l).replace(/\[(\?\?|illegible)\]/g,'<mark title="Uncertain handwriting">[$1]</mark>')).join("\n");
+return `<br><div class="grid g2"><div class="card"><h3>Extracted text <span class="tag">Simulated</span></h3><div class="ocr">${t}</div><br>${MOCK.meds.map(m=>`<div class="item"><span>${m.name}</span><span class="tag ${m.conf<70?"warn":""}">Confidence ${m.conf}% (simulated)</span></div>`).join("")}</div>
+<div class="card"><h3>Simplified explanation <span class="tag">Demo data</span></h3>${MOCK.meds.map(m=>`<p style="margin-top:12px"><b>${m.name}</b> ${m.strength?"· "+m.strength:""}<br><span class="muted">${m.instr?esc(m.instr):"Instructions not clearly readable."}</span>${m.unclear.length?`<br><span class="tag warn">Unclear: ${m.unclear.join(", ")} – verify manually</span>`:""}</p>`).join("")}
+<br><div class="alert"><b>Terms:</b> TDS = three times a day · SOS = only if needed · cap = capsule.</div><div class="alert">AI-generated explanations may contain errors. Always verify prescription details with your doctor or pharmacist.</div><button class="btn p" id="ver">Review &amp; verify medicines</button></div></div>`}
+function setImg(f){if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){toast("Use a JPG, PNG or WEBP image.");return}if(f.size>5*1048576){toast("File is over 5 MB. Choose a smaller image.");return}
+if(scan.url)URL.revokeObjectURL(scan.url);scan.url=URL.createObjectURL(f);scan.stage=-1;redo()}
+const redo=()=>{$("#sc").innerHTML=scanUI();AFTER.scanner()};
+function runScan(){scan.stage=0;redo();const step=()=>{if(scan.stage>=4)return;scan.stage++;redo();if(scan.stage<4)setTimeout(step,1100)};setTimeout(step,1100)}
+function verifyFlow(i=0){if(i>=MOCK.meds.length){toast("Verification finished");go("meds");return}const m=MOCK.meds[i],u=k=>m.unclear.includes(k)?"unclear":"";
+modal(`Verify medicine ${i+1} of ${MOCK.meds.length}`,`<p class="muted">Edit anything that looks wrong. Highlighted fields were unclear and must be reviewed.</p>
+<div><label for="v1">Medicine name</label><input id="v1" value="${esc(m.name)}"></div><div class="${u("strength")}"><label for="v2">Strength ${u("strength")?"(unclear – please enter)":""}</label><input id="v2" value="${esc(m.strength)}"></div>
+<div class="${u("instr")}"><label for="v3">Instructions ${u("instr")?"(unclear – please enter)":""}</label><input id="v3" value="${esc(m.instr)}"></div><label for="v4">Reminder time</label><input id="v4" type="time" value="08:00"><label for="v5">Start date</label><input id="v5" type="date" value="${today()}"><label for="v6">End date</label><input id="v6" type="date" value="${new Date(Date.now()+5*864e5).toISOString().slice(0,10)}">
+<label class="row" style="font-weight:500"><input type="checkbox" id="v7" style="width:auto"> I checked these details against my prescription.</label><p id="err" class="muted" style="color:#a33"></p><div class="row" style="margin-top:12px"><button class="btn p" id="vs">Save medicine</button><button class="btn" id="vk">Skip</button></div>`,(o,close)=>{const g=id=>o.querySelector(id).value.trim();
+o.querySelector("#vk").onclick=()=>{close();verifyFlow(i+1)};
+o.querySelector("#vs").onclick=()=>{const v={name:g("#v1"),strength:g("#v2"),instr:g("#v3"),time:g("#v4"),start:g("#v5"),end:g("#v6")};let e=validate(v);
+if(!e&&m.unclear.some(k=>!v[k]))e="Fill in the highlighted unclear fields (or skip this medicine).";if(!e&&!o.querySelector("#v7").checked)e="Please confirm you reviewed the details.";if(!e&&!v.time)e="Choose a reminder time.";
+if(e){o.querySelector("#err").textContent=e;return}addMed(v);close();verifyFlow(i+1)}})}
+function addMed(v){const m={id:uid(),...v};S.meds.push(m);S.rems.push({id:uid(),name:`${m.name} ${m.strength}`.trim(),time:m.time,st:"pending"});log("Added "+m.name);save();toast(m.name+" saved")}
+/* after-render bindings */
+const AFTER={overview(){$("#ask")&&($("#ask").onclick=openChat)},
+scanner(){const d=$("#drop"),F=$("#file");if(!F)return;F.onchange=e=>setImg(e.target.files[0]);$("#cf").onchange=e=>setImg(e.target.files[0]);
+if(d){d.onclick=()=>F.click();d.onkeydown=e=>{if(e.key==="Enter")F.click()};["dragover","dragenter"].forEach(n=>d.addEventListener(n,e=>{e.preventDefault();d.classList.add("hv")}));["dragleave","drop"].forEach(n=>d.addEventListener(n,()=>d.classList.remove("hv")));d.addEventListener("drop",e=>{e.preventDefault();setImg(e.dataTransfer.files[0])});$("#cam").onclick=()=>$("#cf").click()}
+$("#rep")&&($("#rep").onclick=()=>F.click());$("#rm")&&($("#rm").onclick=()=>{scan.url=null;scan.stage=-1;redo();toast("Image removed")});$("#go")&&($("#go").onclick=runScan);$("#ver")&&($("#ver").onclick=()=>verifyFlow(0))},
+meds(){$("#addm").onclick=()=>medForm();$("#ms").oninput=e=>{q=e.target.value.toLowerCase();render2()};$("#fl").onchange=render2},
+reminders(){$("#addr").onclick=()=>remForm()},
+history(){$("#hs").oninput=render2;$("#hf").onchange=render2},
+settings(){$("#th").value=S.set.theme;$("#th").onchange=e=>{S.set.theme=e.target.value;applyTheme();save()};$("#ld").onchange=e=>{S.set.lead=+e.target.value;save()};
+document.querySelectorAll("[data-s]").forEach(c=>c.onchange=()=>{S.set[c.dataset.s]=c.checked;save();toast("Preference saved")});
+$("#sp").onclick=()=>{const n=$("#un").value.trim(),e=$("#ue").value.trim();if(!n||!/^\S+@\S+\.\S+$/.test(e)){toast("Enter a name and valid email");return}S.user={name:n,email:e};save();$("#avatar").textContent=n[0];$("#welcome").textContent="Welcome back, "+n.split(" ")[0];toast("Profile saved")},
+$("#rst").onclick=()=>{S=structuredClone(SEED);save();applyTheme();toast("Demo data reset");render()}}};
+function render2(){const m=$("#main"),f=$("#fl")?.value,fh=$("#hf")?.value,hs=$("#hs")?.value;m.innerHTML=VIEWS[page]();if($("#fl"))$("#fl").value=f;if($("#hf"))$("#hf").value=fh;if($("#hs")){$("#hs").value=hs;$("#hs").focus()}if($("#ms"))$("#ms").focus();AFTER[page]()}
+function applyTheme(){document.documentElement.dataset.theme=S.set.theme}
+const MF=[["name","Medicine name"],["strength","Strength"],["instr","Instructions"],["time","Reminder time","time"],["start","Start date","date"],["end","End date","date"]];
+function medForm(m){const v=m?{...m}:{name:"",strength:"",instr:"",time:"08:00",start:today(),end:today()};formModal(m?"Edit medicine":"Add medicine",MF,v,r=>{if(m){Object.assign(m,r);toast("Medicine updated")}else addMed(r);save();render()})}
+function remForm(r){const v=r?{...r}:{name:"",time:"09:00"};formModal(r?"Edit reminder":"Add reminder",[["name","Medicine"],["time","Time","time"]],v,x=>{if(r)Object.assign(r,x);else S.rems.push({id:uid(),st:"pending",...x});log("Reminder "+(r?"edited":"added"));save();toast("Reminder saved");render()})}
+/* delegated actions */
+$("#main").addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const id=b.dataset.id,a=b.dataset.a,M=S.meds.find(x=>x.id===id),R=S.rems.find(x=>x.id===id),H=S.hist.find(x=>x.id===id);
+if(a==="view")modal(M.name,`<p><b>${esc(M.strength)}</b></p><p class="muted">${esc(M.instr)}</p><p class="muted">${esc(M.start)} → ${esc(M.end)} · ⏰ ${esc(M.time)}</p><div class="alert">Verify with your doctor or pharmacist.</div>`);
+else if(a==="edit")medForm(M);else if(a==="del"){if(confirm("Delete "+M.name+"?")){S.meds=S.meds.filter(x=>x.id!==id);save();toast("Medicine deleted");render()}}
+else if(a==="take"||a==="skip"){R.st=a==="take"?"taken":"skipped";log(`Marked ${R.name} as ${R.st}`);save();toast(`Marked as ${R.st}`);render()}
+else if(a==="er")remForm(R);else if(a==="dr"){S.rems=S.rems.filter(x=>x.id!==id);save();toast("Reminder deleted");render()}
+else if(a==="hv")modal("Prescription details",`<p>${esc(H.doctor)} · ${esc(H.date)}</p><p class="muted">${H.n} medicine(s) · ${esc(H.status)} (sample record)</p>`);
+else if(a==="hd"&&confirm("Delete this record?")){S.hist=S.hist.filter(x=>x.id!==id);save();toast("Record deleted");render()}});
+/* chat – predefined simulated replies */
+const Q=["What does this prescription instruction mean?","What does before food mean?","Explain this medical abbreviation.","Help me understand the extracted prescription text."];
+const KB=[[/before food|empty stomach|ac\b/,"“Before food” usually means taking the medicine some time before eating. The exact timing is on your prescription — if it isn’t stated, ask your pharmacist."],[/after food|pc\b|meal/,"“After food” generally means taking it after a meal. Check your prescription or ask your pharmacist for exact timing."],[/abbrev|tds|bd|od|sos|qid/,"Common terms: TDS = three times a day, BD = twice a day, OD = once a day, SOS = only if needed. If a term on your prescription isn’t clear, please confirm it with your pharmacist."],[/extract|text|scan/,"I can walk through the text from your scan (demo data): it lists Amoxicillin 500mg and flags two items as unreadable. I can’t guess unclear handwriting — please check those with your doctor."],[/instruction|mean/,"Share the exact wording and I’ll explain the terms in it. I can’t add details that aren’t written there."],[/dose|dosage|diagnos|prescribe|should i take|increase|reduce/,"I can’t diagnose, recommend medicines, or advise changing a dose. Please ask your doctor or pharmacist."]];
+function say(t,c){const d=document.createElement("div");d.className="m "+c;d.textContent=t;$("#msgs").append(d);$("#msgs").scrollTop=1e9;return d}
+function ask(t){t=t.trim();if(!t)return;say(t,"u");const d=say("…","a");let n=0;const iv=setInterval(()=>d.textContent=".".repeat(n++%3+1),300);
+setTimeout(()=>{clearInterval(iv);d.textContent=(KB.find(k=>k[0].test(t.toLowerCase()))||[0,"I can explain general prescription terms and the text on your prescription. For anything else, please ask your doctor or pharmacist."])[1]},1100)}
+function openChat(){$("#chat").classList.add("on");$("#ci").focus()}
+$("#fab").onclick=openChat;$("#cx").onclick=()=>{$("#chat").classList.remove("on");$("#fab").focus()};
+$("#cs").onclick=()=>{ask($("#ci").value);$("#ci").value=""};$("#ci").onkeydown=e=>{if(e.key==="Enter")$("#cs").click()};
+$("#sugg").innerHTML=Q.map(x=>`<button class="btn sm">${x}</button>`).join("");$("#sugg").onclick=e=>{e.target.matches("button")&&ask(e.target.textContent)};
+say("Hi! I explain general prescription terms and the text from your scans. I never diagnose or advise dosing. (Simulated assistant)","a");
+/* accounts */
+function authModal(mode){const su=mode==="signup";
+modal(su?"Create account":"Sign in",`${su?'<label for="an">Full name</label><input id="an" autocomplete="name">':""}<label for="ae">Email</label><input id="ae" type="email" autocomplete="email"><label for="ap">Password</label><input id="ap" type="password" autocomplete="${su?"new-password":"current-password"}" placeholder="${su?"At least 8 characters":""}"><p id="err" class="muted" style="color:#a33;margin-top:8px" role="alert"></p><div class="row" style="margin-top:12px"><button class="btn p" id="as">${su?"Create account":"Sign in"}</button><button class="btn" id="aw">${su?"I already have an account":"Create a new account"}</button></div>`,(o,close)=>{
+const g=id=>o.querySelector(id).value.trim(),err=t=>o.querySelector("#err").textContent=t;
+o.querySelector("#aw").onclick=()=>{close();authModal(su?"login":"signup")};
+o.querySelector("#as").onclick=async()=>{const b={email:g("#ae"),password:o.querySelector("#ap").value};if(su)b.name=g("#an");
+if(su&&!b.name)return err("Enter your name.");if(!/^\S+@\S+\.\S+$/.test(b.email))return err("Enter a valid email.");if(b.password.length<8)return err("Password must be at least 8 characters.");
+try{const r=await fetch(API+"/api/auth/"+(su?"register":"login"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});const d=await r.json().catch(()=>({}));
+if(!r.ok)return err(d.error||"Something went wrong. Try again.");
+localStorage.setItem("mmtoken",d.token);S=structuredClone(SEED);S.user={name:d.name,email:d.email};localStorage.setItem("mm2",JSON.stringify(S));
+await pullState();close();enter();toast(su?"Account created. Welcome, "+d.name.split(" ")[0]+"!":"Signed in")}catch(e){err("Can't reach the server. Start the Spring Boot app and open http://localhost:8080.")}}})}
+$("#logout").onclick=()=>{clearTimeout(syncTimer);localStorage.removeItem("mmtoken");localStorage.removeItem("mm2");S=structuredClone(SEED);$("#home").click();toast("Logged out")};
+applyTheme();pullState();
+</script></body></html>
