@@ -9,8 +9,8 @@
 body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.5}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--tx);outline-offset:2px}
-.btn{border:1px solid var(--bd);background:var(--card);padding:10px 18px;border-radius:12px;cursor:pointer;font-weight:600;transition:.2s}
-.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}
+.btn{border:1px solid var(--bd);background:var(--card);padding:10px 18px;border-radius:12px;cursor:pointer;font-weight:600;transition:.2s;display:inline-block;text-decoration:none;color:var(--tx)}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}.btn:disabled{opacity:.6;cursor:wait;transform:none}
 .btn.p{background:var(--dk);color:#fff;border-color:var(--dk)}[data-theme=dark] .btn.p{background:#f0f0f0;color:#111}
 .btn.sm{padding:6px 12px;font-size:13px;border-radius:9px}.btn.dng{color:#a33}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:22px;box-shadow:var(--sh)}
@@ -20,10 +20,10 @@ h1,h2,h3{letter-spacing:-.03em}.tag{display:inline-block;font-size:12px;font-wei
 .tag.warn{background:#fff3cd;color:#6b5200;outline:1px dashed #b38600}
 input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card)}
 label{font-size:13px;font-weight:600;display:block;margin:12px 0 4px}.unclear input{border:2px dashed #b38600;background:#fffbe9;color:#222}
+.logo{font-weight:800;font-size:19px;display:flex;gap:8px;align-items:center;color:inherit;text-decoration:none}.logo i{width:28px;height:28px;border-radius:8px;background:var(--dk);color:#fff;display:grid;place-items:center;font-style:normal}
 /* landing */
 #landing nav{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);z-index:20;border-bottom:1px solid var(--bd)}
-#landing nav .links{display:flex;gap:26px;align-items:center}#landing nav a{color:var(--tx2);text-decoration:none;font-weight:600;font-size:14px}
-.logo{font-weight:800;font-size:19px;display:flex;gap:8px;align-items:center}.logo i{width:28px;height:28px;border-radius:8px;background:var(--dk);color:#fff;display:grid;place-items:center;font-style:normal}
+#landing nav .links{display:flex;gap:26px;align-items:center}#landing nav .links>a:not(.btn){color:var(--tx2);text-decoration:none;font-weight:600;font-size:14px}
 section.s{padding:80px 5vw;max-width:1200px;margin:auto}.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;padding-top:70px}
 .hero h1{font-size:clamp(38px,5.5vw,66px);line-height:1.04}.hero p{font-size:18px;color:var(--tx2);margin:20px 0 28px;max-width:520px}
 .mock{position:relative;background:var(--dk);border-radius:24px;padding:22px;color:#eee;min-height:340px;overflow:hidden}
@@ -35,6 +35,18 @@ section.s{padding:80px 5vw;max-width:1200px;margin:auto}.hero{display:grid;grid-
 .feat h3{margin:6px 0}.ico{width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:19px}
 .dark{background:var(--dk);color:#eee;border-radius:28px;padding:50px}.dark .muted{color:#aaa}
 footer{padding:40px 5vw;border-top:1px solid var(--bd);color:var(--tx2);font-size:13px;text-align:center}
+/* auth pages */
+#auth{display:none;min-height:100vh;grid-template-columns:minmax(320px,5fr) 6fr}#auth.on{display:grid}
+.abrand{background:var(--dk);color:#eee;padding:44px 48px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;position:sticky;top:0;height:100vh}
+.abrand .logo i{background:#eee;color:#111}.abrand h2{font-size:clamp(30px,3.4vw,44px);line-height:1.1;max-width:440px}.abrand p{color:#aaa;max-width:400px;margin-top:14px}
+.abrand ul{list-style:none;padding:0;display:grid;gap:12px;margin-top:28px}.abrand li{display:flex;gap:12px;align-items:center;font-size:14px;color:#ccc}.abrand li span{width:34px;height:34px;border-radius:10px;background:#262626;display:grid;place-items:center}
+.apanel{display:grid;place-items:center;padding:32px 24px;position:relative}.abox{width:min(420px,100%)}
+.abox h1{font-size:32px}.abox .back{position:absolute;top:24px;left:28px;color:var(--tx2);text-decoration:none;font-weight:600;font-size:14px}
+.abox .pw{position:relative}.abox .pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%)}
+#aerr{min-height:20px;color:#a33;font-size:13px;margin:10px 0 4px}.abox .btn.p{width:100%;padding:13px;margin-top:6px}
+.abox .sw{text-align:center;margin-top:20px;font-size:14px;color:var(--tx2)}.abox .sw a{color:var(--tx);font-weight:700}
+.abox .note{margin-top:26px;font-size:12px;color:var(--tx2);text-align:center}
+.mlogo{display:none}
 /* app */
 #app{display:none;min-height:100vh}#app.on{display:flex}
 aside{width:250px;background:var(--card);border-right:1px solid var(--bd);padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px;flex-shrink:0;transition:transform .3s;z-index:40}
@@ -44,7 +56,7 @@ aside .nav:hover{background:var(--soft);padding-left:18px}aside .nav.on{backgrou
 .top .srch{flex:1;max-width:340px}.av{width:38px;height:38px;border-radius:50%;background:var(--dk);color:#fff;display:grid;place-items:center;font-weight:700}
 #main{padding:28px;max-width:1200px;animation:pg .35s}@keyframes pg{from{opacity:0;transform:translateY(8px)}}
 .menu{display:none}.stat b{font-size:32px;letter-spacing:-.04em;display:block}
-.bars{display:flex;gap:12px;align-items:flex-end;height:150px}.bars div{flex:1;background:var(--dk);border-radius:8px 8px 0 0;transform-origin:bottom;animation:gr .8s;position:relative}[data-theme=dark] .bars div{background:#ddd}
+.bars{display:flex;gap:12px;align-items:flex-end;height:150px}.bars div{flex:1;background:var(--dk);border-radius:8px 8px 0 0;transform-origin:bottom;animation:gr .8s;position:relative;min-height:3px}[data-theme=dark] .bars div{background:#ddd}
 .bars span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:12px;color:var(--tx2)}@keyframes gr{from{transform:scaleY(0)}}
 .item{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}.item:last-child{border:0}
 .prog{height:8px;background:var(--soft);border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;background:var(--dk);border-radius:9px;transition:width .6s}[data-theme=dark] .prog i{background:#eee}
@@ -64,12 +76,17 @@ mark{background:#fff3cd;border-bottom:2px dashed #b38600;color:#222;padding:0 3p
 #chat{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--card);border-left:1px solid var(--bd);z-index:90;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .3s}#chat.on{transform:none}
 #msgs{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}.m{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px}.m.u{align-self:flex-end;background:var(--dk);color:#fff}.m.a{background:var(--soft)}
 .sk{height:90px;border-radius:14px;background:linear-gradient(90deg,var(--soft),var(--bd),var(--soft));background-size:200%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200%}}
-@media(max-width:860px){aside{position:fixed;left:0;transform:translateX(-105%)}aside.on{transform:none}.menu{display:block}.hero{grid-template-columns:1fr}#landing nav .links a.h{display:none}#main{padding:16px}.top{padding:12px 16px}.dark{padding:28px}}
+@media(max-width:860px){aside{position:fixed;left:0;transform:translateX(-105%)}aside.on{transform:none}.menu{display:block}.hero{grid-template-columns:1fr}#landing nav .links a.h{display:none}#main{padding:16px}.top{padding:12px 16px}.dark{padding:28px}
+#auth.on{grid-template-columns:1fr}.abrand{display:none}.mlogo{display:flex;margin-bottom:28px}.abox .back{left:20px}}
+aside{overflow:auto}
+@media print{body *{visibility:hidden}#ecard,#ecard *{visibility:visible}#ecard{position:absolute;left:0;top:0;width:100%;box-shadow:none}}
 @media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
 </style></head><body>
+
+<!-- ============ PAGE 1: LANDING (#/) ============ -->
 <div id="landing">
-<nav><div class="logo"><i>M</i>MediMind AI</div><div class="links"><a class="h" href="#features">Features</a><a class="h" href="#how">How It Works</a><a class="h" href="#about">About</a><a href="#" data-go>Sign In</a><button class="btn p" data-go>Get Started</button></div></nav>
-<section class="s hero"><div><span class="tag">Informational tool · not medical advice</span><h1 style="margin-top:16px">Understand Your Prescription. Take Control of Your Health.</h1><p>Transform complex prescriptions into simple, understandable medication instructions with intelligent AI assistance.</p><div class="row"><button class="btn p" data-go>Try It Now</button><a class="btn" href="#features" style="text-decoration:none">Explore Features</a></div></div>
+<nav><a class="logo" href="#/"><i>M</i>MediMind AI</a><div class="links"><a class="h" href="#features">Features</a><a class="h" href="#how">How It Works</a><a class="h" href="#about">About</a><a href="#/login">Sign In</a><a class="btn p" href="#/signup">Get Started</a></div></nav>
+<section class="s hero"><div><span class="tag">Informational tool · not medical advice</span><h1 style="margin-top:16px">Understand Your Prescription. Take Control of Your Health.</h1><p>Transform complex prescriptions into simple, understandable medication instructions with intelligent AI assistance.</p><div class="row"><a class="btn p" href="#/signup">Try It Now</a><a class="btn" href="#features">Explore Features</a></div></div>
 <div class="mock"><div class="rx"><b>Dr. A. Rao · Rx</b><br>Amoxicillin 500mg<br>1 cap TDS after food<br>Paracetamol <mark>?? mg</mark> SOS<div class="scanline"></div></div>
 <div class="float" style="right:16px;top:14px">💊 3 medicines found</div><div class="float" style="left:16px;bottom:70px;animation-delay:1s">⚠ 1 detail needs review</div>
 <div class="float" style="right:20px;bottom:18px;animation-delay:2s">🤖 “TDS means three times a day.”</div></div></section>
@@ -78,12 +95,33 @@ mark{background:#fff3cd;border-bottom:2px dashed #b38600;color:#222;padding:0 3p
 <div class="card feat"><div class="ico">📷</div><h3>Prescription scanner</h3><p class="muted">Upload or capture a photo and see the text it contains.</p></div>
 <div class="card feat"><div class="ico">🧠</div><h3>Plain-language explanations</h3><p class="muted">Abbreviations and terms explained simply.</p></div>
 <div class="card feat"><div class="ico">💊</div><h3>Medication management</h3><p class="muted">Verify, save, edit and track every medicine.</p></div>
-<div class="card feat"><div class="ico">⏰</div><h3>Reminders</h3><p class="muted">Daily timeline with taken and skipped tracking.</p></div></div></section>
+<div class="card feat"><div class="ico">⏰</div><h3>Reminders</h3><p class="muted">Daily timeline with taken and skipped tracking.</p></div>
+<div class="card feat"><div class="ico">📈</div><h3>Health journal</h3><p class="muted">Log blood pressure, sugar, weight and more.</p></div>
+<div class="card feat"><div class="ico">📅</div><h3>Appointments</h3><p class="muted">Never miss a doctor visit.</p></div>
+<div class="card feat"><div class="ico">🪪</div><h3>Emergency card</h3><p class="muted">Allergies and contacts, ready to print.</p></div>
+<div class="card feat"><div class="ico">💧</div><h3>Daily habits</h3><p class="muted">Water tracker, tips and browser alerts.</p></div></div></section>
 <section class="s" id="how"><h2 style="font-size:36px;margin-bottom:24px">How it works</h2><div class="grid g4">
 <div class="card"><b>1. Upload</b><p class="muted">Add a prescription photo.</p></div><div class="card"><b>2. Extract</b><p class="muted">Text is read (simulated in this demo).</p></div><div class="card"><b>3. Review</b><p class="muted">Check every detail yourself.</p></div><div class="card"><b>4. Organize</b><p class="muted">Save medicines and reminders.</p></div></div></section>
-<section class="s"><div class="dark"><h2>Privacy and safety first</h2><p class="muted" style="margin:10px 0 16px">In this demo, everything stays in your browser. Nothing is uploaded to a server.</p><p>MediMind AI does not diagnose, prescribe or suggest dose changes, and never fills in missing details. Always confirm with your doctor or pharmacist.</p><br><button class="btn" data-go style="color:#111">Open the app</button></div></section>
-<footer>© 2026 MediMind AI · Hackathon demo with simulated OCR and AI. Not a substitute for professional medical advice.</footer></div>
+<section class="s"><div class="dark"><h2>Privacy and safety first</h2><p class="muted" style="margin:10px 0 16px">Your medicines and reminders belong to your account only. Other users can never see them.</p><p>MediMind AI does not diagnose, prescribe or suggest dose changes, and never fills in missing details. Always confirm with your doctor or pharmacist.</p><br><a class="btn" href="#/signup" style="color:#111">Open the app</a></div></section>
+<footer>© 2026 MediMind AI · Simulated OCR and AI. Not a substitute for professional medical advice.</footer></div>
 
+<!-- ============ PAGE 2 & 3: SIGN IN (#/login) and CREATE ACCOUNT (#/signup) ============ -->
+<div id="auth">
+<div class="abrand"><a class="logo" href="#/"><i>M</i>MediMind AI</a>
+<div><h2>Your prescriptions, in plain language.</h2><p>Scan, understand and organize your medicines with reminders that fit your day.</p>
+<ul><li><span>📷</span>Scan a prescription photo</li><li><span>💊</span>Keep every medicine in one place</li><li><span>⏰</span>Track taken and skipped doses</li></ul></div>
+<div class="muted" style="color:#888">Informational tool · not medical advice</div></div>
+<div class="apanel"><a class="back" href="#/">← Back to home</a>
+<div class="abox"><a class="logo mlogo" href="#/"><i>M</i>MediMind AI</a>
+<h1 id="at"></h1><p class="muted" id="as2" style="margin:6px 0 18px"></p>
+<form id="af" novalidate>
+<div id="nmw"><label for="an">Full name</label><input id="an" autocomplete="name" placeholder="Your name"></div>
+<label for="ae">Email</label><input id="ae" type="email" autocomplete="email" placeholder="you@example.com">
+<label for="ap">Password</label><div class="pw"><input id="ap" type="password" placeholder="At least 8 characters"><button type="button" class="btn sm" id="sh" aria-label="Show password">Show</button></div>
+<p id="aerr" role="alert"></p><button class="btn p" id="ab" type="submit"></button></form>
+<p class="sw" id="asw"></p><p class="note">MediMind AI does not diagnose or prescribe. Always confirm with your doctor or pharmacist.</p></div></div></div>
+
+<!-- ============ PAGE 4: APP (#/app) ============ -->
 <div id="app"><aside id="side"><div class="logo" style="padding:6px 10px 18px"><i>M</i>MediMind AI</div><div id="navs" style="display:grid;gap:4px"></div><div style="flex:1"></div><button class="btn sm" id="logout">Log out</button><button class="btn sm" id="home">← Landing page</button></aside>
 <div class="wrap"><div class="top"><button class="btn sm menu" id="menu" aria-label="Menu">☰</button><div id="welcome" style="font-weight:700"></div><input class="srch" id="gs" placeholder="Search medicines…" aria-label="Search"><div style="flex:1"></div><button class="btn sm" id="bell" aria-label="Notifications">🔔</button><div class="av" id="avatar"></div></div><main id="main"></main></div></div>
 <button id="fab" aria-label="Open AI assistant" hidden>🤖</button>
@@ -93,6 +131,7 @@ mark{background:#fff3cd;border-bottom:2px dashed #b38600;color:#222;padding:0 3p
 "use strict";
 const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const today=()=>new Date().toISOString().slice(0,10),uid=()=>Math.random().toString(36).slice(2,9);
+/* Sample data is used ONLY for the "Load sample data" option in Settings. New users always start empty. */
 const SEED={user:{name:"Priya Kulkarni",email:"priya@example.com"},set:{notif:true,sound:false,priv:true,theme:"light",lead:10},
 meds:[{id:"m1",name:"Metformin",strength:"500 mg",instr:"1 tablet twice daily after meals",time:"08:00",start:"2026-10-20",end:"2026-12-20"},
 {id:"m2",name:"Vitamin D3",strength:"60000 IU",instr:"1 capsule once weekly",time:"13:00",start:"2026-09-01",end:"2026-10-15"},
@@ -100,13 +139,15 @@ meds:[{id:"m1",name:"Metformin",strength:"500 mg",instr:"1 tablet twice daily af
 rems:[{id:"r1",name:"Metformin 500 mg",time:"08:00",st:"taken"},{id:"r2",name:"Vitamin D3 60000 IU",time:"13:00",st:"pending"},{id:"r3",name:"Metformin 500 mg",time:"20:00",st:"pending"},{id:"r4",name:"Cetirizine 10 mg",time:"21:00",st:"skipped"}],
 hist:[{id:"h1",doctor:"Dr. S. Patil",date:"2026-10-20",n:2,status:"Verified"},{id:"h2",doctor:"Dr. A. Rao",date:"2026-09-01",n:1,status:"Completed"},{id:"h3",doctor:"Dr. M. Shah",date:"2026-11-01",n:1,status:"Needs review"}],
 act:["Marked Metformin as taken","Verified prescription from Dr. S. Patil"],week:[80,100,60,90,100,70,85]};
-let S;try{S=JSON.parse(localStorage.getItem("mm2"))||structuredClone(SEED)}catch(e){S=structuredClone(SEED)}
-/* Database sync: same-origin when served by Spring Boot, absolute URL when opened as a file */
+const EMPTY=(name,email,set)=>({user:{name:name||"Guest",email:email||""},set:set||{...SEED.set},meds:[],rems:[],hist:[],act:[],week:[0,0,0,0,0,0,0]});
+let S;try{S=JSON.parse(localStorage.getItem("mm2"))||EMPTY()}catch(e){S=EMPTY()}
+/* Database sync: same-origin when served by Spring Boot, absolute URL when opened as a file.
+   If your frontend is a separate Render service, set API to your backend URL, e.g. "https://your-backend.onrender.com" */
 const API=location.protocol==="file:"?"http://localhost:8082":"";let syncTimer;
 const save=()=>{try{localStorage.setItem("mm2",JSON.stringify(S))}catch(e){}pushState()};
 const tok=()=>localStorage.getItem("mmtoken"),hdr=()=>({"Content-Type":"application/json",Authorization:"Bearer "+tok()});
 function pushState(){if(!tok())return;clearTimeout(syncTimer);syncTimer=setTimeout(()=>fetch(API+"/api/state",{method:"PUT",headers:hdr(),body:JSON.stringify(S)}).catch(()=>{}),300)}
-async function pullState(){if(!tok())return;try{const r=await fetch(API+"/api/state",{headers:hdr()});if(r.status===200){S=await r.json();try{localStorage.setItem("mm2",JSON.stringify(S))}catch(e){}applyTheme();if($("#app").classList.contains("on")){$("#welcome").textContent="Welcome back, "+S.user.name.split(" ")[0];render()}}else if(r.status===204)pushState();else if(r.status===401)localStorage.removeItem("mmtoken")}catch(e){/* backend offline: keep working from localStorage */}}
+async function pullState(){if(!tok())return;try{const r=await fetch(API+"/api/state",{headers:hdr()});if(r.status===200){S=await r.json();try{localStorage.setItem("mm2",JSON.stringify(S))}catch(e){}applyTheme();if($("#app").classList.contains("on")){$("#welcome").textContent="Welcome back, "+S.user.name.split(" ")[0];render()}}else if(r.status===204)pushState();else if(r.status===401){localStorage.removeItem("mmtoken");route()}}catch(e){/* backend offline: keep working from localStorage */}}
 function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;$("#toasts").append(e);setTimeout(()=>e.remove(),2600)}
 function log(t){S.act.unshift(t);S.act=S.act.slice(0,6)}
 /* modal */
@@ -114,47 +155,76 @@ function modal(title,html,mount){const o=document.createElement("div");o.classNa
 const close=()=>o.remove();o.addEventListener("click",e=>{if(e.target===o||e.target.dataset.x!==undefined)close()});document.addEventListener("keydown",function k(e){if(e.key==="Escape"){close();document.removeEventListener("keydown",k)}});document.body.append(o);mount&&mount(o,close);return close}
 function formModal(title,fields,vals,onSave){const h=fields.map(f=>`<label for="f_${f[0]}">${f[1]}</label><input id="f_${f[0]}" type="${f[2]||"text"}" value="${esc(vals[f[0]])}">`).join("")+`<p class="muted" id="err" style="color:#a33;margin-top:8px"></p><div class="row" style="margin-top:14px"><button class="btn p" id="sv">Save</button></div>`;
 modal(title,h,(o,close)=>o.querySelector("#sv").onclick=()=>{const v={};fields.forEach(f=>v[f[0]]=o.querySelector("#f_"+f[0]).value.trim());const bad=validate(v);if(bad){o.querySelector("#err").textContent=bad;return}onSave(v);close()})}
-function validate(v){if("name" in v&&!v.name)return "Name is required.";if(v.start&&v.end&&v.end<v.start)return "End date must be after the start date.";if(v.time&&!/^\d\d:\d\d$/.test(v.time))return "Choose a valid time.";return ""}
-/* routing */
-const PAGES=[["overview","▦","Overview"],["scanner","📷","Prescription Scanner"],["meds","💊","My Medicines"],["reminders","⏰","Reminders"],["history","🗂","Prescription History"],["assistant","🤖","AI Assistant"],["settings","⚙","Settings"]];
+function validate(v){if("doctor" in v&&(!v.doctor||!v.date))return "Doctor and date are required.";if("name" in v&&!v.name)return "Name is required.";if(v.start&&v.end&&v.end<v.start)return "End date must be after the start date.";if(v.time&&!/^\d\d:\d\d$/.test(v.time))return "Choose a valid time.";return ""}
+/* ---------- page router: #/ (landing) · #/login · #/signup · #/app ---------- */
+let cur="";
+function view(n){$("#landing").style.display=n==="landing"?"":"none";$("#auth").classList.toggle("on",n==="auth");$("#app").classList.toggle("on",n==="app");$("#fab").hidden=n!=="app";if(cur!==n){cur=n;scrollTo(0,0)}}
+function route(){const h=location.hash,t=tok();
+if(h==="#/app"){if(!t){location.hash="#/login";return}view("app");enter()}
+else if(h==="#/login"||h==="#/signup"){if(t){location.hash="#/app";return}view("auth");showAuth(h.slice(2))}
+else view("landing")}
+addEventListener("hashchange",route);
+/* app shell */
+const PAGES=[["overview","▦","Overview"],["scanner","📷","Prescription Scanner"],["meds","💊","My Medicines"],["reminders","⏰","Reminders"],["history","🗂","Prescription History"],["journal","📈","Health Journal"],["appts","📅","Appointments"],["profile","🪪","Health Profile"],["assistant","🤖","AI Assistant"],["settings","⚙","Settings"]];
 let page="overview",q="";const scan={url:null,stage:-1,res:null};
 function go(p){if(p==="assistant"){openChat();return}page=p;$("#side").classList.remove("on");renderNav();render()}
 function renderNav(){$("#navs").innerHTML=PAGES.map(p=>`<button class="nav ${p[0]===page?"on":""}" data-p="${p[0]}">${p[1]} ${p[2]}</button>`).join("")}
-function enter(){$("#landing").style.display="none";$("#app").classList.add("on");$("#fab").hidden=false;$("#welcome").textContent="Welcome back, "+S.user.name.split(" ")[0];$("#avatar").textContent=S.user.name[0];renderNav();render();scrollTo(0,0)}
-document.querySelectorAll("[data-go]").forEach(b=>b.onclick=e=>{e.preventDefault();tok()?enter():authModal(b.textContent.trim()==="Sign In"?"login":"signup")});
-$("#home").onclick=()=>{$("#app").classList.remove("on");$("#landing").style.display="";$("#fab").hidden=true};
+function enter(){$("#welcome").textContent="Welcome back, "+S.user.name.split(" ")[0];$("#avatar").textContent=S.user.name[0];applyTheme();renderNav();render()}
+$("#home").onclick=()=>{location.hash="#/"};
 $("#menu").onclick=()=>$("#side").classList.toggle("on");
 $("#navs").onclick=e=>{const b=e.target.closest("[data-p]");b&&go(b.dataset.p)};
-$("#bell").onclick=()=>modal("Notifications",`<p class="muted" style="margin:10px 0">${S.rems.filter(r=>r.st==="pending").length} reminders pending today.</p><div class="alert">Browser reminders are a demonstration only and are not a substitute for a reliable medical alert system.</div>`);
+$("#bell").onclick=()=>modal("Notifications",`<p class="muted" style="margin:10px 0">${S.rems.filter(r=>r.st==="pending").length} reminders pending today.</p><div class="alert">Browser alerts only work while this tab stays open, and are not a substitute for a reliable medical alert system.</div><button class="btn p" id="en">Enable browser alerts</button>`,o=>o.querySelector("#en").onclick=async()=>{if(!("Notification" in window)){toast("Not supported in this browser");return}const r=await Notification.requestPermission();toast(r==="granted"?"Browser alerts enabled":"Permission not granted")});
+const fired=new Set();setInterval(()=>{if(!tok()||!("Notification" in window)||Notification.permission!=="granted"||!S.set.notif)return;const hm=new Date().toTimeString().slice(0,5);S.rems.forEach(r=>{const k=r.id+today();if(r.st==="pending"&&r.time===hm&&!fired.has(k)){fired.add(k);new Notification("Time for "+r.name,{body:"Check your prescription for instructions."})}})},20000);
 $("#gs").oninput=e=>{q=e.target.value.toLowerCase();if(q&&page!=="meds")go("meds");else render()};
 function render(){const m=$("#main");m.innerHTML='<div class="grid g2"><div class="sk"></div><div class="sk"></div></div>';setTimeout(()=>{m.innerHTML=VIEWS[page]();(AFTER[page]||(()=>{}))();m.focus?.()},120)}
 const sched=()=>[...S.rems].sort((a,b)=>a.time.localeCompare(b.time));
 const stTag=s=>`<span class="tag">${{taken:"Taken",skipped:"Skipped",pending:"Upcoming"}[s]}</span>`;
 const isActive=m=>m.end>=today();
+/* local-only extras: saved in this browser per account, NOT sent to the backend */
+const XK=()=>"mmx_"+(S.user.email||"guest"),XD=()=>({vitals:[],appts:[],prof:{},water:{d:"",n:0}});
+const xl=()=>{try{return{...XD(),...JSON.parse(localStorage.getItem(XK()))}}catch(e){return XD()}};
+const xs=x=>{try{localStorage.setItem(XK(),JSON.stringify(x))}catch(e){}};
+const TIPS=["Take medicines at the same time each day to build a habit.","Keep a list of all your medicines when you visit any doctor.","Never stop a prescribed medicine without asking your doctor.","Store medicines away from heat and moisture.","Check expiry dates before taking a medicine.","Bring old prescriptions to every appointment."];
+const greet=()=>{const h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening"};
+const VT={"Blood pressure":"mmHg","Blood sugar":"mg/dL","Weight":"kg","Temperature":"°C","Pulse":"bpm"};let vtSel="Blood pressure";
 /* views */
 const VIEWS={
-overview(){const t=S.rems.filter(r=>r.st==="taken").length,p=S.rems.filter(r=>r.st==="pending").length,done=S.rems.filter(r=>r.st!=="pending").length,ad=done?Math.round(t/done*100):100,days="MTWTFSS".split("");
-return `<h1>Overview</h1><p class="muted">Your medication picture for today.</p><br><div class="grid g4">
+overview(){const X=xl(),w=X.water.d===today()?X.water.n:0,nx=X.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0],t=S.rems.filter(r=>r.st==="taken").length,p=S.rems.filter(r=>r.st==="pending").length,done=S.rems.filter(r=>r.st!=="pending").length,ad=done?Math.round(t/done*100):0,days="MTWTFSS".split("");
+return `<h1>${greet()}, ${esc(S.user.name.split(" ")[0])}</h1><p class="muted">💡 ${TIPS[new Date().getDate()%TIPS.length]}</p><br><div class="grid g4">
 <div class="card stat"><span class="muted">Total medicines</span><b>${S.meds.length}</b></div><div class="card stat"><span class="muted">Upcoming reminders</span><b>${p}</b></div><div class="card stat"><span class="muted">Completed doses</span><b>${t}</b></div><div class="card stat"><span class="muted">Adherence</span><b>${ad}%</b><div class="prog"><i style="width:${ad}%"></i></div></div></div><br>
-<div class="grid g2"><div class="card"><h3>Weekly activity</h3><p class="muted">Doses taken as % of scheduled (sample data)</p><br><div class="bars">${S.week.map((v,i)=>`<div style="height:${v}%"><span>${days[i]}</span></div>`).join("")}</div><br></div>
-<div class="card"><h3>Today's schedule</h3>${sched().map(r=>`<div class="item"><span><b>${esc(r.time)}</b> ${esc(r.name)}</span>${stTag(r.st)}</div>`).join("")||'<p class="muted">No reminders yet.</p>'}</div>
-<div class="card"><h3>Recent prescriptions</h3>${S.hist.slice(0,3).map(h=>`<div class="item"><span>${esc(h.doctor)}<br><small class="muted">${esc(h.date)}</small></span><span class="tag">${esc(h.status)}</span></div>`).join("")}</div>
+<div class="grid g2"><div class="card"><h3>💧 Water intake</h3><p class="muted">Glasses today (goal 8)</p><b style="font-size:32px">${w}</b><div class="prog" style="margin-top:8px"><i style="width:${Math.min(100,w/8*100)}%"></i></div><div class="row" style="margin-top:12px"><button class="btn sm" data-x="w+">+ Glass</button><button class="btn sm" data-x="w-">− Glass</button></div></div>
+<div class="card"><h3>📅 Next appointment</h3>${nx?`<p style="margin-top:8px"><b>${esc(nx.doctor)}</b></p><p class="muted">${esc(nx.date)} · ${esc(nx.time)}</p>`:'<p class="muted" style="margin-top:8px">None scheduled.</p>'}<button class="btn sm" data-x="goappts" style="margin-top:12px">Manage appointments</button></div></div><br>
+<div class="grid g2"><div class="card"><h3>Weekly activity</h3><p class="muted">Doses taken as % of scheduled</p><br><div class="bars">${S.week.map((v,i)=>`<div style="height:${v}%"><span>${days[i]}</span></div>`).join("")}</div><br></div>
+<div class="card"><h3>Today's schedule</h3>${sched().map(r=>`<div class="item"><span><b>${esc(r.time)}</b> ${esc(r.name)}</span>${stTag(r.st)}</div>`).join("")||'<p class="muted" style="margin-top:8px">No reminders yet. Scan a prescription or add a medicine to get started.</p>'}</div>
+<div class="card"><h3>Recent prescriptions</h3>${S.hist.slice(0,3).map(h=>`<div class="item"><span>${esc(h.doctor)}<br><small class="muted">${esc(h.date)}</small></span><span class="tag">${esc(h.status)}</span></div>`).join("")||'<p class="muted" style="margin-top:8px">No prescriptions yet.</p>'}</div>
 <div class="card" style="background:var(--dk);color:#eee"><h3>AI assistant</h3><p style="margin:8px 0 14px;color:#bbb">Ask what “after food” or “TDS” means. I explain terms only — never diagnoses or dosing advice.</p><button class="btn" id="ask" style="color:#111">Open assistant</button></div>
-<div class="card"><h3>Recent activity</h3>${S.act.map(a=>`<div class="item muted">${esc(a)}</div>`).join("")}</div></div>`},
+<div class="card"><h3>Recent activity</h3>${S.act.map(a=>`<div class="item muted">${esc(a)}</div>`).join("")||'<p class="muted" style="margin-top:8px">Nothing yet.</p>'}</div></div>`},
 scanner(){return `<h1>Prescription Scanner</h1><p class="muted">Upload a JPG, PNG or WEBP (max 5 MB). OCR and AI here are <b>simulated demo data</b>.</p><br><div id="sc">${scanUI()}</div>`},
 meds(){const f=$("#fl")?.value||"all",list=S.meds.filter(m=>(!q||(m.name+m.instr).toLowerCase().includes(q))&&(f==="all"||(f==="active")===isActive(m)));
-return `<div class="row sp"><h1>My Medicines</h1><button class="btn p" id="addm">+ Add medicine</button></div><br><div class="row"><input id="ms" placeholder="Search medicines" value="${esc(q)}" style="max-width:280px" aria-label="Search medicines"><select id="fl" style="max-width:160px" aria-label="Filter"><option value="all">All</option><option value="active">Active</option><option value="done">Completed</option></select></div><br>
-<div class="grid g2">${list.map(m=>`<div class="card"><div class="row sp"><h3>${esc(m.name)}</h3><span class="tag">${isActive(m)?"Active":"Completed"}</span></div><p>${esc(m.strength)||'<span class="tag warn">Strength not set</span>'}</p><p class="muted">${esc(m.instr)}</p><p class="muted">${esc(m.start)} → ${esc(m.end)} · ⏰ ${esc(m.time)}</p><div class="row" style="margin-top:12px"><button class="btn sm" data-a="view" data-id="${m.id}">Details</button><button class="btn sm" data-a="edit" data-id="${m.id}">Edit</button><button class="btn sm dng" data-a="del" data-id="${m.id}">Delete</button></div></div>`).join("")||'<div class="card muted">No medicines match. Add one or scan a prescription.</div>'}</div>`},
+return `<div class="row sp"><h1>My Medicines</h1><span class="row"><button class="btn" data-x="csv">⬇ Export CSV</button><button class="btn p" id="addm">+ Add medicine</button></span></div><br><div class="row"><input id="ms" placeholder="Search medicines" value="${esc(q)}" style="max-width:280px" aria-label="Search medicines"><select id="fl" style="max-width:160px" aria-label="Filter"><option value="all">All</option><option value="active">Active</option><option value="done">Completed</option></select></div><br>
+<div class="grid g2">${list.map(m=>`<div class="card"><div class="row sp"><h3>${esc(m.name)}</h3><span class="tag">${isActive(m)?"Active":"Completed"}</span></div><p>${esc(m.strength)||'<span class="tag warn">Strength not set</span>'}</p><p class="muted">${esc(m.instr)}</p><p class="muted">${esc(m.start)} → ${esc(m.end)} · ⏰ ${esc(m.time)}</p><div class="row" style="margin-top:12px"><button class="btn sm" data-a="view" data-id="${m.id}">Details</button><button class="btn sm" data-a="edit" data-id="${m.id}">Edit</button><button class="btn sm dng" data-a="del" data-id="${m.id}">Delete</button></div></div>`).join("")||'<div class="card muted">No medicines yet. Add one or scan a prescription.</div>'}</div>`},
 reminders(){const d=sched(),n=d.filter(r=>r.st!=="pending").length,pc=d.length?Math.round(n/d.length*100):0,dn=new Date().getDay();
 return `<div class="row sp"><h1>Reminders</h1><button class="btn p" id="addr">+ Add reminder</button></div><div class="alert">Browser reminders are a demonstration and not a substitute for a reliable medical alert system.</div>
 <div class="card"><div class="week">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map((x,i)=>`<div class="${i===dn?"today":""}">${x}<br><b>${new Date(Date.now()+(i-dn)*864e5).getDate()}</b></div>`).join("")}</div><br><div class="row sp"><b>Today's completion</b><span>${pc}%</span></div><div class="prog"><i style="width:${pc}%"></i></div></div><br>
 <div class="card"><h3>Daily timeline</h3>${d.map(r=>`<div class="item"><span><b>${esc(r.time)}</b> · ${esc(r.name)} ${stTag(r.st)}</span><span class="row"><button class="btn sm" data-a="take" data-id="${r.id}">Mark as Taken</button><button class="btn sm" data-a="skip" data-id="${r.id}">Mark as Skipped</button><button class="btn sm" data-a="er" data-id="${r.id}">Edit</button><button class="btn sm dng" data-a="dr" data-id="${r.id}">Delete</button></span></div>`).join("")||'<p class="muted">No reminders. Add your first one.</p>'}</div>`},
 history(){const f=$("#hf")?.value||"all",s=($("#hs")?.value||"").toLowerCase(),l=S.hist.filter(h=>h.doctor.toLowerCase().includes(s)&&(f==="all"||h.status===f));
 return `<h1>Prescription History</h1><br><div class="row"><input id="hs" placeholder="Search by doctor" style="max-width:260px" aria-label="Search history"><select id="hf" style="max-width:180px" aria-label="Filter status"><option value="all">All statuses</option><option>Verified</option><option>Completed</option><option>Needs review</option></select></div><br><div class="card">${l.map(h=>`<div class="item"><span><b>${esc(h.doctor)}</b><br><small class="muted">${esc(h.date)} · ${h.n} medicine(s)</small></span><span class="row"><span class="tag">${esc(h.status)}</span><button class="btn sm" data-a="hv" data-id="${h.id}">View details</button><button class="btn sm dng" data-a="hd" data-id="${h.id}">Delete</button></span></div>`).join("")||'<p class="muted">No records found.</p>'}</div>`},
+journal(){const X=xl(),l=X.vitals.filter(v=>v.type===vtSel).sort((a,b)=>b.date.localeCompare(a.date)),last=l.slice(0,7).reverse(),nums=last.map(v=>parseFloat(v.value)||0),mx=Math.max(1,...nums);
+return `<div class="row sp"><h1>Health Journal</h1><button class="btn p" data-x="addv">+ Add reading</button></div><p class="muted">Log your own readings. Saved on this device only. This is a record, not medical advice.</p><br>
+<select id="vt" style="max-width:220px" aria-label="Reading type">${Object.keys(VT).map(k=>`<option ${k===vtSel?"selected":""}>${k}</option>`).join("")}</select><br><br>
+<div class="card"><h3>${vtSel} · last ${last.length||0} readings</h3>${last.length?`<br><div class="bars">${last.map((v,i)=>`<div style="height:${nums[i]/mx*100}%" title="${esc(v.value)}"><span>${esc(v.date.slice(5))}</span></div>`).join("")}</div><br>`:'<p class="muted" style="margin-top:8px">No readings yet. Add your first one.</p>'}</div><br>
+<div class="card">${l.map(v=>`<div class="item"><span><b>${esc(v.value)}</b> ${VT[v.type]}<br><small class="muted">${esc(v.date)}</small></span><button class="btn sm dng" data-x="vd" data-id="${v.id}">Delete</button></div>`).join("")||'<p class="muted">Nothing logged.</p>'}</div>`},
+appts(){const X=xl(),s=[...X.appts].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)),up=s.filter(a=>a.date>=today()),pa=s.filter(a=>a.date<today()).reverse(),
+row=a=>`<div class="item"><span><b>${esc(a.doctor)}</b><br><small class="muted">${esc(a.date)} · ${esc(a.time)}${a.note?" · "+esc(a.note):""}</small></span><span class="row"><button class="btn sm" data-x="ae" data-id="${a.id}">Edit</button><button class="btn sm dng" data-x="ad" data-id="${a.id}">Delete</button></span></div>`;
+return `<div class="row sp"><h1>Appointments</h1><button class="btn p" data-x="adda">+ Add appointment</button></div><p class="muted">Saved on this device only.</p><br><div class="card"><h3>Upcoming</h3>${up.map(row).join("")||'<p class="muted" style="margin-top:8px">No upcoming appointments.</p>'}</div><br><div class="card"><h3>Past</h3>${pa.map(row).join("")||'<p class="muted" style="margin-top:8px">Nothing here yet.</p>'}</div>`},
+profile(){const p=xl().prof,f=(k,l,ph)=>`<label for="p_${k}">${l}</label><input id="p_${k}" value="${esc(p[k])}" placeholder="${ph||""}">`,r=(l,k)=>`<div class="item"><span>${l}</span><b>${esc(p[k])||"—"}</b></div>`;
+return `<div class="row sp"><h1>Health Profile</h1><button class="btn" data-x="print">🖨 Print emergency card</button></div><p class="muted">Saved on this device only. Keep it accurate and show it to your doctors.</p><br>
+<div class="grid g2"><div class="card"><h3>Details</h3>${f("bg","Blood group","e.g. B+")}${f("al","Allergies","e.g. Penicillin")}${f("co","Medical conditions")}${f("en","Emergency contact name")}${f("ep","Emergency contact phone")}${f("dn","Family doctor")}<br><button class="btn p" id="pps">Save profile</button></div>
+<div class="card" id="ecard"><h3>🪪 Emergency card</h3><p class="muted">${esc(S.user.name)}</p>${r("Blood group","bg")}${r("Allergies","al")}${r("Conditions","co")}${r("Emergency contact","en")}${r("Contact phone","ep")}${r("Family doctor","dn")}</div></div>`},
 settings(){const s=S.set,tg=(k,l)=>`<label class="row" style="margin:10px 0;font-weight:500"><input type="checkbox" style="width:auto" data-s="${k}" ${s[k]?"checked":""}> ${l}</label>`;
 return `<h1>Settings</h1><br><div class="grid g2"><div class="card"><h3>Profile</h3><label for="un">Name</label><input id="un" value="${esc(S.user.name)}"><label for="ue">Email</label><input id="ue" type="email" value="${esc(S.user.email)}"><br><button class="btn p" id="sp">Save profile</button></div>
-<div class="card"><h3>Preferences</h3>${tg("notif","Notifications on")}${tg("sound","Reminder sound")}${tg("priv","Keep data only in this browser")}<label for="th">Theme</label><select id="th"><option value="light">Light</option><option value="dark">Dark</option></select><label for="ld">Remind me before (minutes)</label><input id="ld" type="number" min="0" max="60" value="${s.lead}"><br><button class="btn" id="rst">Reset demo data</button></div>
-<div class="card"><h3>About</h3><p class="muted">MediMind AI v1.0 demo. OCR and AI responses are simulated; data lives in localStorage.</p></div>
+<div class="card"><h3>Preferences</h3>${tg("notif","Notifications on")}${tg("sound","Reminder sound")}${tg("priv","Keep data only in this browser")}<label for="th">Theme</label><select id="th"><option value="light">Light</option><option value="dark">Dark</option></select><label for="ld">Remind me before (minutes)</label><input id="ld" type="number" min="0" max="60" value="${s.lead}"><br><div class="row"><button class="btn" id="rst">Clear all my data</button><button class="btn" id="smp">Load sample data</button></div></div>
+<div class="card"><h3>About</h3><p class="muted">MediMind AI v1.0. OCR and AI responses are simulated; your data is saved to your account.</p></div>
 <div class="card"><h3>Medical safety</h3><p class="muted">This tool organizes information. It does not diagnose, prescribe or advise dose changes. Unclear details must be checked with your doctor or pharmacist.</p></div></div>`}};
 /* scanner */
 const STAGES=["Uploading prescription","Extracting text (simulated OCR)","Processing with AI (simulated)","Preparing simplified explanation"];
@@ -185,7 +255,9 @@ if(!e&&m.unclear.some(k=>!v[k]))e="Fill in the highlighted unclear fields (or sk
 if(e){o.querySelector("#err").textContent=e;return}addMed(v);close();verifyFlow(i+1)}})}
 function addMed(v){const m={id:uid(),...v};S.meds.push(m);S.rems.push({id:uid(),name:`${m.name} ${m.strength}`.trim(),time:m.time,st:"pending"});log("Added "+m.name);save();toast(m.name+" saved")}
 /* after-render bindings */
-const AFTER={overview(){$("#ask")&&($("#ask").onclick=openChat)},
+const AFTER={journal(){$("#vt").onchange=e=>{vtSel=e.target.value;render2()}},appts(){},
+profile(){$("#pps").onclick=()=>{const X=xl();["bg","al","co","en","ep","dn"].forEach(k=>X.prof[k]=$("#p_"+k).value.trim());xs(X);toast("Profile saved");render2()}},
+overview(){$("#ask")&&($("#ask").onclick=openChat)},
 scanner(){const d=$("#drop"),F=$("#file");if(!F)return;F.onchange=e=>setImg(e.target.files[0]);$("#cf").onchange=e=>setImg(e.target.files[0]);
 if(d){d.onclick=()=>F.click();d.onkeydown=e=>{if(e.key==="Enter")F.click()};["dragover","dragenter"].forEach(n=>d.addEventListener(n,e=>{e.preventDefault();d.classList.add("hv")}));["dragleave","drop"].forEach(n=>d.addEventListener(n,()=>d.classList.remove("hv")));d.addEventListener("drop",e=>{e.preventDefault();setImg(e.dataTransfer.files[0])});$("#cam").onclick=()=>$("#cf").click()}
 $("#rep")&&($("#rep").onclick=()=>F.click());$("#rm")&&($("#rm").onclick=()=>{scan.url=null;scan.stage=-1;redo();toast("Image removed")});$("#go")&&($("#go").onclick=runScan);$("#ver")&&($("#ver").onclick=()=>verifyFlow(0))},
@@ -194,8 +266,9 @@ reminders(){$("#addr").onclick=()=>remForm()},
 history(){$("#hs").oninput=render2;$("#hf").onchange=render2},
 settings(){$("#th").value=S.set.theme;$("#th").onchange=e=>{S.set.theme=e.target.value;applyTheme();save()};$("#ld").onchange=e=>{S.set.lead=+e.target.value;save()};
 document.querySelectorAll("[data-s]").forEach(c=>c.onchange=()=>{S.set[c.dataset.s]=c.checked;save();toast("Preference saved")});
-$("#sp").onclick=()=>{const n=$("#un").value.trim(),e=$("#ue").value.trim();if(!n||!/^\S+@\S+\.\S+$/.test(e)){toast("Enter a name and valid email");return}S.user={name:n,email:e};save();$("#avatar").textContent=n[0];$("#welcome").textContent="Welcome back, "+n.split(" ")[0];toast("Profile saved")},
-$("#rst").onclick=()=>{S=structuredClone(SEED);save();applyTheme();toast("Demo data reset");render()}}};
+$("#sp").onclick=()=>{const n=$("#un").value.trim(),e=$("#ue").value.trim();if(!n||!/^\S+@\S+\.\S+$/.test(e)){toast("Enter a name and valid email");return}S.user={name:n,email:e};save();$("#avatar").textContent=n[0];$("#welcome").textContent="Welcome back, "+n.split(" ")[0];toast("Profile saved")};
+$("#rst").onclick=()=>{if(!confirm("Delete all your medicines, reminders and history?"))return;S=EMPTY(S.user.name,S.user.email,S.set);save();toast("All data cleared");render()};
+$("#smp").onclick=()=>{if(!confirm("Replace your data with sample data?"))return;const u=S.user;S=structuredClone(SEED);S.user=u;save();toast("Sample data loaded");render()}}};
 function render2(){const m=$("#main"),f=$("#fl")?.value,fh=$("#hf")?.value,hs=$("#hs")?.value;m.innerHTML=VIEWS[page]();if($("#fl"))$("#fl").value=f;if($("#hf"))$("#hf").value=fh;if($("#hs")){$("#hs").value=hs;$("#hs").focus()}if($("#ms"))$("#ms").focus();AFTER[page]()}
 function applyTheme(){document.documentElement.dataset.theme=S.set.theme}
 const MF=[["name","Medicine name"],["strength","Strength"],["instr","Instructions"],["time","Reminder time","time"],["start","Start date","date"],["end","End date","date"]];
@@ -207,8 +280,17 @@ if(a==="view")modal(M.name,`<p><b>${esc(M.strength)}</b></p><p class="muted">${e
 else if(a==="edit")medForm(M);else if(a==="del"){if(confirm("Delete "+M.name+"?")){S.meds=S.meds.filter(x=>x.id!==id);save();toast("Medicine deleted");render()}}
 else if(a==="take"||a==="skip"){R.st=a==="take"?"taken":"skipped";log(`Marked ${R.name} as ${R.st}`);save();toast(`Marked as ${R.st}`);render()}
 else if(a==="er")remForm(R);else if(a==="dr"){S.rems=S.rems.filter(x=>x.id!==id);save();toast("Reminder deleted");render()}
-else if(a==="hv")modal("Prescription details",`<p>${esc(H.doctor)} · ${esc(H.date)}</p><p class="muted">${H.n} medicine(s) · ${esc(H.status)} (sample record)</p>`);
+else if(a==="hv")modal("Prescription details",`<p>${esc(H.doctor)} · ${esc(H.date)}</p><p class="muted">${H.n} medicine(s) · ${esc(H.status)}</p>`);
 else if(a==="hd"&&confirm("Delete this record?")){S.hist=S.hist.filter(x=>x.id!==id);save();toast("Record deleted");render()}});
+function vitalForm(){modal("Add reading",`<label for="vk">Type</label><select id="vk">${Object.keys(VT).map(k=>`<option ${k===vtSel?"selected":""}>${k}</option>`).join("")}</select><label for="vv">Value (e.g. 120/80)</label><input id="vv"><label for="vdt">Date</label><input id="vdt" type="date" value="${today()}"><p class="muted" id="err" style="color:#a33;margin-top:8px"></p><button class="btn p" id="sv" style="margin-top:10px">Save</button>`,(o,close)=>o.querySelector("#sv").onclick=()=>{const v={id:uid(),type:o.querySelector("#vk").value,value:o.querySelector("#vv").value.trim(),date:o.querySelector("#vdt").value};if(!v.value||!v.date){o.querySelector("#err").textContent="Enter a value and date.";return}const X=xl();X.vitals.push(v);xs(X);vtSel=v.type;close();toast("Reading saved");render2()})}
+function apptForm(a){formModal(a?"Edit appointment":"Add appointment",[["doctor","Doctor / clinic"],["date","Date","date"],["time","Time","time"],["note","Note"]],a||{doctor:"",date:today(),time:"09:00",note:""},v=>{const X=xl();if(a){const i=X.appts.findIndex(z=>z.id===a.id);X.appts[i]={...a,...v}}else X.appts.push({id:uid(),...v});xs(X);toast("Appointment saved");render2()})}
+function exportCsv(){if(!S.meds.length){toast("No medicines to export");return}const c=v=>'"'+String(v??"").replace(/"/g,'""')+'"',r=[["Name","Strength","Instructions","Time","Start","End"],...S.meds.map(m=>[m.name,m.strength,m.instr,m.time,m.start,m.end])].map(a=>a.map(c).join(",")).join("\n"),a=document.createElement("a");a.href=URL.createObjectURL(new Blob([r],{type:"text/csv"}));a.download="my-medicines.csv";a.click();toast("Exported")}
+$("#main").addEventListener("click",e=>{const b=e.target.closest("[data-x]");if(!b)return;const a=b.dataset.x,id=b.dataset.id,X=xl();
+if(a==="w+"||a==="w-"){const n=X.water.d===today()?X.water.n:0;X.water={d:today(),n:Math.max(0,n+(a==="w+"?1:-1))};xs(X);render2()}
+else if(a==="goappts")go("appts");else if(a==="csv")exportCsv();else if(a==="print")window.print();else if(a==="addv")vitalForm();else if(a==="adda")apptForm();
+else if(a==="ae")apptForm(X.appts.find(z=>z.id===id));
+else if(a==="vd"){X.vitals=X.vitals.filter(v=>v.id!==id);xs(X);toast("Entry deleted");render2()}
+else if(a==="ad"&&confirm("Delete this appointment?")){X.appts=X.appts.filter(z=>z.id!==id);xs(X);toast("Appointment deleted");render2()}});
 /* chat – predefined simulated replies */
 const Q=["What does this prescription instruction mean?","What does before food mean?","Explain this medical abbreviation.","Help me understand the extracted prescription text."];
 const KB=[[/before food|empty stomach|ac\b/,"“Before food” usually means taking the medicine some time before eating. The exact timing is on your prescription — if it isn’t stated, ask your pharmacist."],[/after food|pc\b|meal/,"“After food” generally means taking it after a meal. Check your prescription or ask your pharmacist for exact timing."],[/abbrev|tds|bd|od|sos|qid/,"Common terms: TDS = three times a day, BD = twice a day, OD = once a day, SOS = only if needed. If a term on your prescription isn’t clear, please confirm it with your pharmacist."],[/extract|text|scan/,"I can walk through the text from your scan (demo data): it lists Amoxicillin 500mg and flags two items as unreadable. I can’t guess unclear handwriting — please check those with your doctor."],[/instruction|mean/,"Share the exact wording and I’ll explain the terms in it. I can’t add details that aren’t written there."],[/dose|dosage|diagnos|prescribe|should i take|increase|reduce/,"I can’t diagnose, recommend medicines, or advise changing a dose. Please ask your doctor or pharmacist."]];
@@ -220,17 +302,25 @@ $("#fab").onclick=openChat;$("#cx").onclick=()=>{$("#chat").classList.remove("on
 $("#cs").onclick=()=>{ask($("#ci").value);$("#ci").value=""};$("#ci").onkeydown=e=>{if(e.key==="Enter")$("#cs").click()};
 $("#sugg").innerHTML=Q.map(x=>`<button class="btn sm">${x}</button>`).join("");$("#sugg").onclick=e=>{e.target.matches("button")&&ask(e.target.textContent)};
 say("Hi! I explain general prescription terms and the text from your scans. I never diagnose or advise dosing. (Simulated assistant)","a");
-/* accounts */
-function authModal(mode){const su=mode==="signup";
-modal(su?"Create account":"Sign in",`${su?'<label for="an">Full name</label><input id="an" autocomplete="name">':""}<label for="ae">Email</label><input id="ae" type="email" autocomplete="email"><label for="ap">Password</label><input id="ap" type="password" autocomplete="${su?"new-password":"current-password"}" placeholder="${su?"At least 8 characters":""}"><p id="err" class="muted" style="color:#a33;margin-top:8px" role="alert"></p><div class="row" style="margin-top:12px"><button class="btn p" id="as">${su?"Create account":"Sign in"}</button><button class="btn" id="aw">${su?"I already have an account":"Create a new account"}</button></div>`,(o,close)=>{
-const g=id=>o.querySelector(id).value.trim(),err=t=>o.querySelector("#err").textContent=t;
-o.querySelector("#aw").onclick=()=>{close();authModal(su?"login":"signup")};
-o.querySelector("#as").onclick=async()=>{const b={email:g("#ae"),password:o.querySelector("#ap").value};if(su)b.name=g("#an");
+/* ---------- auth pages ---------- */
+let amode="login";
+function showAuth(m){amode=m;const su=m==="signup";document.title=(su?"Create account":"Sign in")+" – MediMind AI";
+$("#at").textContent=su?"Create your account":"Welcome back";$("#as2").textContent=su?"Start organizing your medicines in minutes.":"Sign in to see your medicines and reminders.";
+$("#nmw").hidden=!su;$("#ab").textContent=su?"Create account":"Sign in";$("#ap").autocomplete=su?"new-password":"current-password";
+$("#asw").innerHTML=su?'Already have an account? <a href="#/login">Sign in</a>':'New here? <a href="#/signup">Create an account</a>';
+$("#aerr").textContent="";$("#af").reset();$("#ap").type="password";$("#sh").textContent="Show"}
+$("#sh").onclick=()=>{const p=$("#ap"),h=p.type==="password";p.type=h?"text":"password";$("#sh").textContent=h?"Hide":"Show"};
+$("#af").onsubmit=async e=>{e.preventDefault();const su=amode==="signup",err=t=>$("#aerr").textContent=t,btn=$("#ab"),label=btn.textContent;
+const b={email:$("#ae").value.trim(),password:$("#ap").value};if(su)b.name=$("#an").value.trim();
 if(su&&!b.name)return err("Enter your name.");if(!/^\S+@\S+\.\S+$/.test(b.email))return err("Enter a valid email.");if(b.password.length<8)return err("Password must be at least 8 characters.");
+err("");btn.disabled=true;btn.textContent="Please wait…";const w=setTimeout(()=>err("The server is waking up. This can take up to a minute…"),4000);
 try{const r=await fetch(API+"/api/auth/"+(su?"register":"login"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});const d=await r.json().catch(()=>({}));
-if(!r.ok)return err(d.error||"Something went wrong. Try again.");
-localStorage.setItem("mmtoken",d.token);S=structuredClone(SEED);S.user={name:d.name,email:d.email};localStorage.setItem("mm2",JSON.stringify(S));
-await pullState();close();enter();toast(su?"Account created. Welcome, "+d.name.split(" ")[0]+"!":"Signed in")}catch(e){err("Can't reach the server. Start the Spring Boot app and open http://localhost:8080.")}}})}
-$("#logout").onclick=()=>{clearTimeout(syncTimer);localStorage.removeItem("mmtoken");localStorage.removeItem("mm2");S=structuredClone(SEED);$("#home").click();toast("Logged out")};
-applyTheme();pullState();
+if(!r.ok){err(d.error||"Something went wrong. Try again.");return}
+/* start every session from an EMPTY state, then load only this user's own data from the server */
+localStorage.setItem("mmtoken",d.token);S=EMPTY(d.name,d.email);localStorage.setItem("mm2",JSON.stringify(S));
+await pullState();err("");location.hash="#/app";toast(su?"Account created. Welcome, "+d.name.split(" ")[0]+"!":"Signed in")}
+catch(x){err("Can't reach the server. Please check your connection and try again in a minute.")}
+finally{clearTimeout(w);btn.disabled=false;btn.textContent=label}};
+$("#logout").onclick=()=>{clearTimeout(syncTimer);localStorage.removeItem("mmtoken");localStorage.removeItem("mm2");S=EMPTY();page="overview";location.hash="#/login";toast("Logged out")};
+applyTheme();pullState();route();
 </script></body></html>
